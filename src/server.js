@@ -13,6 +13,7 @@ var hostname = process.env.HOSTNAME || "localhost";
 const server = new Server();
 server.connection({host: hostname, port: process.env.PORT || 8000});
 server.start(function () {
+
 	console.info("==> ✅  Server is listening");
 	console.info("==> 🌎  Go to " + server.info.uri.toLowerCase());
 });
@@ -24,10 +25,18 @@ server.route({
 	method:  "*",
 	path:    "/{params*}",
 	handler: (request, reply) => {
+		console.log('statico');
 		reply.file("static" + request.path);
 	}
 });
 
+server.route({
+	method:  "*",
+	path:    "/api/cazzate",
+	handler: (request, reply) => {
+		reply({porco: 'cane'})
+	}
+});
 /**
  * Endpoint that proxies all GitHub API requests to https://api.github.com.
  */
